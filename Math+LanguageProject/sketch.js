@@ -1,13 +1,13 @@
 // By: Sania Khaja
 // ART 151
 // Math/Language Project
-// An interactive art piece that allows the user to change background colors, shape colors, the shape, transparency and border thickness. Creates a 3D view when mouse is clicked and drawn with, by changing size of shape based on position. This is applicable for the rectangle and ellipse. For the triangle, the speed at which the mouse is moved adds an 3D affect to the drawing. The slower the mouse moves, the more dimension the drawing has. The random button chooses a random color, transparency, shape and border thickness to add more variety to the program. 
+// An interactive art piece that allows the user to change background colors, shape colors, the shape, transparency and border thickness. Creates a 3D view when mouse is clicked and drawn with, by changing size of shape based on position. This is applicable for the rectangle and ellipse. For the triangle, the speed at which the mouse is moved adds an 3D affect to the drawing. The slower the mouse moves, the more dimension the drawing has. The random button chooses a random color, transparency, shape and border thickness to add more variety to the program.I also made the canvas window width and height to allow more room for th user to draw. I used the math round function when the user is drawing which I thought would produce a more clear looking image since the pixels would be rounded and not always fractional. The user can also just click and create a cool canvas that way, without dragging the mouse while clicking
 
 // the words on the button and the user being able to use those words to then create a picture, shows how math and language are related. The words in a sense are creating a shapes when clicked on which then shows math
 
 let shapeColor; 
 let theShape;
-let transparency = false;
+let transparency;
 let borderThickness = 1;
 let currentColor = "White";
 
@@ -17,7 +17,7 @@ let blue;
 
 // used to set up background and buttons
 function setup() {
-  createCanvas(920, 770);
+  createCanvas(windowWidth, windowHeight);
   // this allows for a random background color to be chosen each time the program is run
   let redBackground = random(0, 255);
   let greenBackground = random(0, 255);
@@ -30,13 +30,13 @@ function setup() {
   backgroundButton = createButton("Change Background Color and Reset Canvas");
   backgroundButton.style('font-size','25px');
   backgroundButton.style('background-color', col);
-  backgroundButton.position(180, 0);
+  backgroundButton.position((windowWidth / 2) - 250, 0);
   
   // used to choose random color, transparency, shape and border thickness
   randomButton = createButton("Random");
   randomButton.style('font-size','20px');
   randomButton.style('background-color', col);
-  randomButton.position(400, 50);
+  randomButton.position(windowWidth / 2, 50);
   
   // creating button to change color of shape to red
   redShapeButton = createButton("Red Shape");
@@ -59,25 +59,25 @@ function setup() {
   
   // creating rectangle and then creating button for rectangles to be created
   fill (0, 0, 0);
-  rect(750, 100, 25, 25);
+  rect(windowWidth - 135, 100, 25, 25);
   rectButton = createButton("Rectangle");
   rectButton.style('font-size','15px');
   rectButton.style('background-color', color(255, 255, 255));
-  rectButton.position(800, 100);
+  rectButton.position(windowWidth - 100, 100);
   
   // creating ellipse and then creating button for ellipses to be created
-  ellipse(760, 160, 25, 25);
+  ellipse(windowWidth - 125, 160, 25, 25);
   ellipseButton = createButton("Ellipse");
   ellipseButton.style('font-size','15px');
   ellipseButton.style('background-color', color(255, 255, 255));
-  ellipseButton.position(800, 150);
+  ellipseButton.position(windowWidth - 100, 150);
   
   // creating triangle and then creating button for triangles to be created
-  triangle(760, 200, 780,  220, 740, 220);
+  triangle(windowWidth - 125, 220, windowWidth - 150,  200, windowWidth - 100, 200);
   triangleButton = createButton("Triangle");
   triangleButton.style('font-size','15px');
   triangleButton.style('background-color', color(255, 255, 255));
-  triangleButton.position(800, 200);
+  triangleButton.position(windowWidth - 100, 200);
   
   // button for transparency of shape
   transparencyButton = createButton("Transparency");
@@ -93,19 +93,19 @@ function setup() {
   
   // displays what a thin border would look like and then creates button for it
   strokeWeight(1);
-  line(750, 310, 780, 310);
+  line(windowWidth - 150, 310, windowWidth - 120, 310);
   thinStrokeButton = createButton("Thin Border");
   thinStrokeButton.style('font-size','15px');
   thinStrokeButton.style('background-color', color(255, 255, 255));
-  thinStrokeButton.position(800, 300);
+  thinStrokeButton.position(windowWidth - 100, 300);
   
   // displays what a thick border would look like and then displays button for it
   strokeWeight(5);
-  line(750, 360, 780, 360);
+  line(windowWidth - 150, 360, windowWidth - 120, 360);
   thickStrokeButton = createButton("Thick Border");
   thickStrokeButton.style('font-size','15px');
   thickStrokeButton.style('background-color', color(255, 255, 255));
-  thickStrokeButton.position(800, 350);
+  thickStrokeButton.position(windowWidth - 100, 350);
 }
 
 // used to change background color to a random color
@@ -184,7 +184,7 @@ function chooseRandom() {
    borderThickness = random(0, 7);
   
   // choosing random transparency
-  let transparency = (10, 255);
+  transparency = random(10, 255);
   
   currentColor = "Random";
   red = random(0, 255);
@@ -206,14 +206,14 @@ function draw() {
   
   // making sure that shapes next buttons will not get covered
   fill (0, 0, 0);
-  rect(750, 100, 25, 25);
-  ellipse(760, 160, 25, 25);
-  triangle(760, 200, 780,  220, 740, 220);
+  rect(windowWidth - 135, 100, 25, 25);
+  ellipse(windowWidth - 125, 160, 25, 25);
+  triangle(windowWidth - 125, 220, windowWidth - 150,  200, windowWidth - 100, 200);
   
   strokeWeight(1);
-  line(750, 310, 780, 310);
+  line(windowWidth - 150, 310, windowWidth - 120, 310);
   strokeWeight(5);
-  line(750, 360, 780, 360);
+  line(windowWidth - 150, 360, windowWidth - 120, 360);
   
   // checking color if button pressed
   redShapeButton.mousePressed(changeShapeToRed);
@@ -261,11 +261,11 @@ function draw() {
   if (mouseIsPressed) {
     // checking which shape to display
     if (theShape == "Rectangle") {
-      rect(mouseX, mouseY, mouseX, mouseY); // mouse position creates dimension
+      rect(round(mouseX), round(mouseY), round(mouseX), round(mouseY)); // mouse position creates dimension
     } else if (theShape == "Ellipse") {
-      ellipse(mouseX, mouseY, mouseX, mouseY); // mouse position creates dimension
+      ellipse(round(mouseX), round(mouseY), round(mouseX), round(mouseY)); // mouse position creates dimension
     } else {
-      triangle(mouseX, mouseY, mouseX - 100, mouseY - 100, mouseX + 100, mouseY - 100);
+      triangle(round(mouseX), round(mouseY), round(mouseX) - 100, round(mouseY) - 100, round(mouseX) + 100, round(mouseY) - 100);
     } 
   }
 
